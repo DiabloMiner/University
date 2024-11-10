@@ -1,0 +1,2 @@
+This repository is used for projects made for university that are too small to warrant their own repository.
+Currently the repository only contains the first semester and withhin that only EP1 is contained.
