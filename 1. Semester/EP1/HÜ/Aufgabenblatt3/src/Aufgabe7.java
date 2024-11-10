@@ -57,6 +57,28 @@ public class Aufgabe7 {
     // Iterative Version -> handgeschrieben und basierend auf ChatGPT Version
     private static void drawCirclesIterHand(CodeDraw myDrawObj, int y, int radius, int num){
         // TODO: Implementieren Sie hier Ihre Lösung für die Methode
+        int xCenter = myDrawObj.getWidth() / 2, initialNum = num;
+
+        while (num > 0) {
+            // Berechne anhand der Iterationsnummer, die Anzahl von Kreisen, die in dieser Iteration gezeichnet werden muss
+            int numOfCircles = (int) Math.pow(2, initialNum - num);
+
+            // Setze die Farbe für den aktuellen Kreis
+            myDrawObj.setColor(new Color(255 - num * 30, 255 - num * 30, 0));
+
+            for (int i = 0; i < numOfCircles; i++) {
+                // Berechne anhand vom Radius die y-Position des nächsten Kreises
+                y = radius + i * 2 * radius;
+
+                // Zeichne einen Kreis
+                myDrawObj.fillCircle(xCenter, y, radius);
+            }
+
+            // Berechne den nächsten Radius
+            radius /= 2;
+
+            num--;
+        }
     }
 
     public static void main(String[] args) {
