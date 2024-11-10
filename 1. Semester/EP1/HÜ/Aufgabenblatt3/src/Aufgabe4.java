@@ -11,10 +11,11 @@ public class Aufgabe4 {
         } else if (text.length() < 2 * sequence.length()) {
             return false;
         } else if (text.length() == 2 * sequence.length()) {
-            // At this point text should consist of sequence repeated two times
+            // At this point text should consist of the sequence repeated two times
             // Therefore check if the first chars of the first and second half of text match the first char of sequence
             // And then cut all first chars off and return to this base case until text and sequence are empty
 
+            // TODO: Could be simplified into a ternary operator
             if (sequence.charAt(0) == text.charAt(0) && sequence.charAt(0) == text.charAt(sequence.length())) {
                 String cutoffString = text.substring(1, sequence.length()) + text.substring(sequence.length() + 1);
                 return isStartAndEndSeq(cutoffString, sequence.substring(1));
@@ -24,6 +25,7 @@ public class Aufgabe4 {
         }
 
         // Recursive case: Remove all chars that might be between the two sequences
+        // TODO: Could be moved into base case
         String shortenedString = text.substring(0, sequence.length()) + text.substring(text.length() - sequence.length());
         return isStartAndEndSeq(shortenedString, sequence); //Zeile kann geändert oder entfernt werden.
     }

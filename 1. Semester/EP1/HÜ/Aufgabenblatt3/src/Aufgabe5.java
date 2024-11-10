@@ -9,8 +9,8 @@ public class Aufgabe5 {
         if (text.length() <= 1) {
             return text;
         } else if (text.length() == 2) {
-            if (text.charAt(1) <= text.charAt(0)) {
-                return (text.substring(1, 2) + text.charAt(0));
+            if (text.charAt(1) < text.charAt(0)) {
+                return text.substring(1, 2) + text.charAt(0);
             } else {
                 return text;
             }
@@ -33,6 +33,18 @@ public class Aufgabe5 {
             sortedString = sortedString.charAt(1) + orderCharGroups(sortedString.charAt(0) + sortedString.substring(2));
         }
         return sortedString; //Zeile kann geändert oder entfernt werden.
+    }
+
+    private static String order(String text) {
+        if (text.length() <= 1) {
+            return text;
+        }
+
+        char first = text.charAt(0);
+        String ordered = order(text.substring(1));
+
+        String full = (ordered.charAt(0) == first) ? first + ordered : ordered + first;
+        return full;
     }
 
     public static void main(String[] args) {
