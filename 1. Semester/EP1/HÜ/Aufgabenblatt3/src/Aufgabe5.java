@@ -6,13 +6,9 @@ public class Aufgabe5 {
     private static String orderCharGroups(String text) {
         // TODO: Implementieren Sie hier Ihre Lösung für die Methode
         // Base cases
-        if (text.isEmpty()) {
+        if (text.length() <= 1) {
             return text;
-        }
-        if (text.length() == 1) {
-            return text;
-        }
-        if (text.length() == 2) {
+        } else if (text.length() == 2) {
             if (text.charAt(1) <= text.charAt(0)) {
                 return (text.substring(1, 2) + text.charAt(0));
             } else {
@@ -20,7 +16,7 @@ public class Aufgabe5 {
             }
         }
 
-        // Recursive cases
+        // Recursive case
         String sortedString;
 
         // Check if first char should be swapped, then separate the first char of the new string

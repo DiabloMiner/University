@@ -5,26 +5,27 @@ public class Aufgabe4 {
 
     private static boolean isStartAndEndSeq(String text, String sequence) {
         // TODO: Implementieren Sie hier Ihre Lösung für die Methode
-        // Base cases
-        if (text.length() < sequence.length()) {
-            return false;
-        }
-        // Check if the first chars are equal and then check the remaining strings for equality
-        // In the base case of both string being empty return true
+        // Base Cases: Check if text can actually have two sequences otherwise immediately return false
         if (text.length() == sequence.length()) {
-            if (text.isEmpty()) {
-                return true;
-            } else if (text.charAt(0) == sequence.charAt(0)) {
-                return isStartAndEndSeq(text.substring(1), sequence.substring(1));
+            return text.isEmpty();
+        } else if (text.length() < 2 * sequence.length()) {
+            return false;
+        } else if (text.length() == 2 * sequence.length()) {
+            // At this point text should consist of sequence repeated two times
+            // Therefore check if the first chars of the first and second half of text match the first char of sequence
+            // And then cut all first chars off and return to this base case until text and sequence are empty
+
+            if (sequence.charAt(0) == text.charAt(0) && sequence.charAt(0) == text.charAt(sequence.length())) {
+                String cutoffString = text.substring(1, sequence.length()) + text.substring(sequence.length() + 1);
+                return isStartAndEndSeq(cutoffString, sequence.substring(1));
             } else {
                 return false;
             }
         }
 
-        // Recursive case
-        boolean isStartSeq = isStartAndEndSeq(text.substring(0, sequence.length()), sequence);
-        boolean isEndSeq = isStartAndEndSeq(text.substring((text.length()) - sequence.length()), sequence);
-        return isStartSeq && isEndSeq; //Zeile kann geändert oder entfernt werden.
+        // Recursive case: Remove all chars that might be between the two sequences
+        String shortenedString = text.substring(0, sequence.length()) + text.substring(text.length() - sequence.length());
+        return isStartAndEndSeq(shortenedString, sequence); //Zeile kann geändert oder entfernt werden.
     }
 
     public static void main(String[] args) {
