@@ -4,7 +4,6 @@
 public class Aufgabe2 {
 
     private static void addChar(String text, char character) {
-        //TODO: Implementieren Sie hier Ihre Lösung für die Angabe
         String modifiedText = "";
         boolean doubleChar = true;
 
@@ -25,12 +24,10 @@ public class Aufgabe2 {
     }
 
     private static void addChar(int number, char character) {
-        //TODO: Implementieren Sie hier Ihre Lösung für die Angabe
 	    addChar(Integer.toString(number), character);
     }
 
     private static void addChar(String text, String characters) {
-        //TODO: Implementieren Sie hier Ihre Lösung für die Angabe
         // Loop through all characters and call addChar for each one
         for (int i = 0; i < characters.length(); i++) {
             addChar(text, characters.charAt(i));
@@ -38,7 +35,6 @@ public class Aufgabe2 {
     }
 
     private static void addChar(String text) {
-        //TODO: Implementieren Sie hier Ihre Lösung für die Angabe
         addChar(text, '=');
     }
 
@@ -70,5 +66,7 @@ public class Aufgabe2 {
         addChar(text1);
         addChar(text2);
         addChar(text3);
+
+
     }
 }

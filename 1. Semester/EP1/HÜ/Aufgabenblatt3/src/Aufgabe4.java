@@ -4,30 +4,22 @@
 public class Aufgabe4 {
 
     private static boolean isStartAndEndSeq(String text, String sequence) {
-        // TODO: Implementieren Sie hier Ihre Lösung für die Methode
         // Base Cases: Check if text can actually have two sequences otherwise immediately return false
         if (text.length() == sequence.length()) {
             return text.isEmpty();
         } else if (text.length() < 2 * sequence.length()) {
             return false;
-        } else if (text.length() == 2 * sequence.length()) {
-            // At this point text should consist of the sequence repeated two times
-            // Therefore check if the first chars of the first and second half of text match the first char of sequence
-            // And then cut all first chars off and return to this base case until text and sequence are empty
-
-            // TODO: Could be simplified into a ternary operator
-            if (sequence.charAt(0) == text.charAt(0) && sequence.charAt(0) == text.charAt(sequence.length())) {
-                String cutoffString = text.substring(1, sequence.length()) + text.substring(sequence.length() + 1);
-                return isStartAndEndSeq(cutoffString, sequence.substring(1));
-            } else {
-                return false;
-            }
         }
 
-        // Recursive case: Remove all chars that might be between the two sequences
-        // TODO: Could be moved into base case
-        String shortenedString = text.substring(0, sequence.length()) + text.substring(text.length() - sequence.length());
-        return isStartAndEndSeq(shortenedString, sequence); //Zeile kann geändert oder entfernt werden.
+        // Recursive case:
+        // Check the chars of text where first and last char of seq should be
+        // If so split those chars off text (and remove all chars between start and end seq) and one off seq and return into recursion
+        int endingSeqStart = text.length() - sequence.length();
+        Character firstSeqChar = sequence.charAt(0);
+        String cutoffString = text.substring(1, sequence.length()) + text.substring(endingSeqStart + 1);
+
+        return (firstSeqChar == text.charAt(0) && firstSeqChar == text.charAt(endingSeqStart))
+        ? isStartAndEndSeq(cutoffString, sequence.substring(1)) : false;
     }
 
     public static void main(String[] args) {

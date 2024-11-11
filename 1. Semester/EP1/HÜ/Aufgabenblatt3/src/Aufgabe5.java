@@ -4,7 +4,6 @@
 public class Aufgabe5 {
 
     private static String orderCharGroups(String text) {
-        // TODO: Implementieren Sie hier Ihre Lösung für die Methode
         // Base cases
         if (text.length() <= 1) {
             return text;
@@ -32,19 +31,21 @@ public class Aufgabe5 {
         if (sortedString.charAt(0) > sortedString.charAt(1)) {
             sortedString = sortedString.charAt(1) + orderCharGroups(sortedString.charAt(0) + sortedString.substring(2));
         }
-        return sortedString; //Zeile kann geändert oder entfernt werden.
+        return sortedString;
     }
 
     private static String order(String text) {
+        // Base case: (There is nothing to sort)
         if (text.length() <= 1) {
             return text;
         }
 
-        char first = text.charAt(0);
-        String ordered = order(text.substring(1));
-
-        String full = (ordered.charAt(0) == first) ? first + ordered : ordered + first;
-        return full;
+        // Recursive case: Split the first char from text, sort the remaining string,
+        // if the char is equal to the first char of the now sorted string add it to the front otherwise to the back
+        char firstChar = text.charAt(0);
+        String sortedString = order(text.substring(1));
+        String result = (sortedString.charAt(0) == firstChar) ? firstChar + sortedString : sortedString + firstChar;
+        return result;
     }
 
     public static void main(String[] args) {

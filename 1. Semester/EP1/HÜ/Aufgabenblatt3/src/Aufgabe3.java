@@ -18,7 +18,6 @@ public class Aufgabe3 {
     }
 
     private static void printEvenNumbersDescending(int end) {
-        //TODO: Implementieren Sie hier Ihre Lösung für die Methode
         // Base cases
         if (end < 0) {
             return;
@@ -32,18 +31,18 @@ public class Aufgabe3 {
     }
 
     private static int countCharChanges(String text) {
-        //TODO: Implementieren Sie hier Ihre Lösung für die Methode
         // Base case
         if (text.length() == 1) {
             return 0;
         }
 
-        // Recursive case
+        // Recursive case: Check if first and second char are different
+        // If so increment counter and check for the remaining string without the first char
         int counter = 0;
         if (text.charAt(0) != text.charAt(1)) {
             counter++;
         }
-        return counter + countCharChanges(text.substring(1)); //Zeile kann geändert oder entfernt werden.
+        return counter + countCharChanges(text.substring(1));
     }
 
     public static void main(String[] args) {

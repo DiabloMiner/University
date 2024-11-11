@@ -9,13 +9,12 @@ import java.awt.*;
 public class Aufgabe6 {
 
     private static void drawCirclesRec(CodeDraw myDrawObj, int y, int radius, int num) {
-        // TODO: Implementieren Sie hier Ihre Lösung für die Methode
         // Base case
         if (num < 0) {
             return;
         }
 
-        // Recursive case: Draw a circle and go into recursion
+        // Recursive case: Draw a circle and then draw the two circles within
         myDrawObj.setColor(new Color(255 - num * 30, 255 - num * 30, 0));
         myDrawObj.fillCircle(myDrawObj.getWidth() / 2.0, y, radius);
 
