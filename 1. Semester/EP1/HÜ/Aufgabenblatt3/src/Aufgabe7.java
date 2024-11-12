@@ -62,16 +62,18 @@ public class Aufgabe7 {
             // Berechne anhand der Iterationsnummer, die Anzahl von Kreisen, die in dieser Iteration gezeichnet werden muss
             int numOfCircles = (int) Math.pow(2, initialNum - num);
 
+            // Berechne Position auf der, der erste Kreis sein muss
+            int firstY = y - (numOfCircles - 1) * radius;
+
             // Setze die Farbe für den aktuellen Kreis
             myDrawObj.setColor(new Color(255 - num * 30, 255 - num * 30, 0));
 
-            // TODO: Reimplement: Actually use y!
             for (int i = 0; i < numOfCircles; i++) {
-                // Berechne anhand vom Radius die y-Position des nächsten Kreises
-                y = radius + i * 2 * radius;
+                // Berechne y-Position des zu zeichnenden Kreises basierend auf der Position des ersten Kreises
+                int yPos = firstY + 2 * i * radius;
 
                 // Zeichne einen Kreis
-                myDrawObj.fillCircle(xCenter, y, radius);
+                myDrawObj.fillCircle(xCenter, yPos, radius);
             }
 
             // Berechne den nächsten Radius
