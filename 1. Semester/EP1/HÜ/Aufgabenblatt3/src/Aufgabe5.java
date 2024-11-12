@@ -8,11 +8,7 @@ public class Aufgabe5 {
         if (text.length() <= 1) {
             return text;
         } else if (text.length() == 2) {
-            if (text.charAt(1) < text.charAt(0)) {
-                return text.substring(1, 2) + text.charAt(0);
-            } else {
-                return text;
-            }
+            return text.charAt(1) < text.charAt(0) ? text.substring(1, 2) + text.charAt(0) : text;
         }
 
         // Recursive case
@@ -44,8 +40,7 @@ public class Aufgabe5 {
         // if the char is equal to the first char of the now sorted string add it to the front otherwise to the back
         char firstChar = text.charAt(0);
         String sortedString = order(text.substring(1));
-        String result = (sortedString.charAt(0) == firstChar) ? firstChar + sortedString : sortedString + firstChar;
-        return result;
+        return (sortedString.charAt(0) == firstChar) ? firstChar + sortedString : sortedString + firstChar;
     }
 
     public static void main(String[] args) {

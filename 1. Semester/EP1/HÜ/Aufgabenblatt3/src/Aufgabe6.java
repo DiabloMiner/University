@@ -14,7 +14,7 @@ public class Aufgabe6 {
             return;
         }
 
-        // Recursive case: Draw a circle and then draw the two circles within
+        // Recursive case: Draw a circle and then call itself again for the two smaller circles
         myDrawObj.setColor(new Color(255 - num * 30, 255 - num * 30, 0));
         myDrawObj.fillCircle(myDrawObj.getWidth() / 2.0, y, radius);
 

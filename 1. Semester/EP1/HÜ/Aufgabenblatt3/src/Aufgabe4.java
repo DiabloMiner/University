@@ -14,12 +14,11 @@ public class Aufgabe4 {
         // Recursive case:
         // Check the chars of text where first and last char of seq should be
         // If so split those chars off text (and remove all chars between start and end seq) and one off seq and return into recursion
-        int endingSeqStart = text.length() - sequence.length();
-        Character firstSeqChar = sequence.charAt(0);
-        String cutoffString = text.substring(1, sequence.length()) + text.substring(endingSeqStart + 1);
+        int secondSeqStart = text.length() - sequence.length();
+        char firstSeqChar = sequence.charAt(0);
+        String cutoffString = text.substring(1, sequence.length()) + text.substring(secondSeqStart + 1);
 
-        return (firstSeqChar == text.charAt(0) && firstSeqChar == text.charAt(endingSeqStart))
-        ? isStartAndEndSeq(cutoffString, sequence.substring(1)) : false;
+        return (firstSeqChar == text.charAt(0) && firstSeqChar == text.charAt(secondSeqStart)) && isStartAndEndSeq(cutoffString, sequence.substring(1));
     }
 
     public static void main(String[] args) {

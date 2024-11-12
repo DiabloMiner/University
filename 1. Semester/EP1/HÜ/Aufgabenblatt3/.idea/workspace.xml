@@ -6,11 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7480e371-52df-43a9-8cce-8ee73c3e11c2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Aufgabe2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Aufgabe2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Aufgabenblatt3/Aufgabe5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Aufgabenblatt3/Aufgabe5.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Aufgabe3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Aufgabe3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Aufgabe4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Aufgabe4.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Aufgabe5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Aufgabe5.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Aufgabe6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Aufgabe6.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Aufgabe7.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Aufgabe7.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,14 +45,14 @@
     "Application.Aufgabe1.executor": "Debug",
     "Application.Aufgabe2 (1).executor": "Run",
     "Application.Aufgabe2.executor": "Run",
-    "Application.Aufgabe3.executor": "Run",
+    "Application.Aufgabe3.executor": "Debug",
     "Application.Aufgabe4 (1).executor": "Run",
     "Application.Aufgabe4 (2).executor": "Run",
     "Application.Aufgabe4 (3).executor": "Run",
     "Application.Aufgabe4 (4).executor": "Run",
     "Application.Aufgabe4 (5).executor": "Run",
     "Application.Aufgabe4 (6).executor": "Run",
-    "Application.Aufgabe4.executor": "Debug",
+    "Application.Aufgabe4.executor": "Run",
     "Application.Aufgabe5 (1).executor": "Run",
     "Application.Aufgabe5 (2).executor": "Run",
     "Application.Aufgabe5 (3).executor": "Run",
@@ -134,6 +135,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Aufgabe4.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-defaults>
         <breakpoint suspend="THREAD" type="java-line" />
       </breakpoints-defaults>
