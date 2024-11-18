@@ -4,46 +4,37 @@
 public class Aufgabe3 {
 
     private static void printOddNumbersAscending(int start, int end) {
-        //TODO: Implementieren Sie hier Ihre Lösung für die Methode
-        // Base cases
+        // Base case
         if (start > end) {
             return;
         }
-        if (start % 2 != 0) {
-            System.out.print(start + " ");
-        }
 
         // Recursion case
+        System.out.print(start % 2 != 0 ? start + " "  : "");
         printOddNumbersAscending(++start, end);
     }
 
     private static void printEvenNumbersDescending(int end) {
-        //TODO: Implementieren Sie hier Ihre Lösung für die Methode
-        // Base cases
+        // Base case
         if (end < 0) {
             return;
         }
-        if (end % 2 == 0) {
-            System.out.print(end + " ");
-        }
 
         // Recursive case
+        System.out.print(end % 2 == 0 ? end + " " : "");
         printEvenNumbersDescending(--end);
     }
 
     private static int countCharChanges(String text) {
-        //TODO: Implementieren Sie hier Ihre Lösung für die Methode
         // Base case
-        if (text.length() == 1) {
+        if (text.length() <= 1) {
             return 0;
         }
 
-        // Recursive case
-        int counter = 0;
-        if (text.charAt(0) != text.charAt(1)) {
-            counter++;
-        }
-        return counter + countCharChanges(text.substring(1)); //Zeile kann geändert oder entfernt werden.
+        // Recursive case: Check if first and second char are different
+        // If so increment counter and check for the remaining string without the first char
+        int counter = text.charAt(0) != text.charAt(1) ? 1 : 0;
+        return counter + countCharChanges(text.substring(1));
     }
 
     public static void main(String[] args) {

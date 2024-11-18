@@ -4,39 +4,16 @@
 public class Aufgabe5 {
 
     private static String orderCharGroups(String text) {
-        // TODO: Implementieren Sie hier Ihre Lösung für die Methode
-        // Base cases
-        if (text.isEmpty()) {
+        // Base case: (There is nothing to sort)
+        if (text.length() <= 1) {
             return text;
         }
-        if (text.length() == 1) {
-            return text;
-        }
-        if (text.length() == 2) {
-            if (text.charAt(1) <= text.charAt(0)) {
-                return (text.substring(1, 2) + text.charAt(0));
-            } else {
-                return text;
-            }
-        }
 
-        // Recursive cases
-        String sortedString;
-
-        // Check if first char should be swapped, then separate the first char of the new string
-        // and sort the rest of the input string, then add them up again
-        if (text.charAt(0) <= text.charAt(1)) {
-            sortedString = text.charAt(0) + orderCharGroups(text.substring(1));
-        } else {
-            sortedString = text.charAt(1) + orderCharGroups(text.charAt(0) + text.substring(2));
-        }
-
-        // Check if first character combined with the input string is already sorted
-        // or if the first char needs to be swapped and the rest of the string resorted
-        if (sortedString.charAt(0) > sortedString.charAt(1)) {
-            sortedString = sortedString.charAt(1) + orderCharGroups(sortedString.charAt(0) + sortedString.substring(2));
-        }
-        return sortedString; //Zeile kann geändert oder entfernt werden.
+        // Recursive case: Split the first char from text, sort the remaining string,
+        // If the char is equal to the first char of the now sorted string add it to the front otherwise to the back
+        char firstChar = text.charAt(0);
+        String sortedString = orderCharGroups(text.substring(1));
+        return (sortedString.charAt(0) == firstChar) ? firstChar + sortedString : sortedString + firstChar;
     }
 
     public static void main(String[] args) {
