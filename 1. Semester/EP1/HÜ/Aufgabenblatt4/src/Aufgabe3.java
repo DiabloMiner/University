@@ -8,6 +8,18 @@ public class Aufgabe3 {
 
     private static void replaceValues(int[] workArray) {
         //TODO: Implementieren Sie hier Ihre Lösung für die Angabe
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        for (int workInt : workArray) {
+            min = Math.min(workInt, min);
+            max = Math.max(workInt, max);
+        }
+
+        for (int i = 0; i < workArray.length; i++) {
+            int minDist = Math.abs(workArray[i] - min);
+            int maxDist = Math.abs(workArray[i] - max);
+            workArray[i] = (minDist <= maxDist) ? min : max;
+        }
+
     }
 
     public static void main(String[] args) {

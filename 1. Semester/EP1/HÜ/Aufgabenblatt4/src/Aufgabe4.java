@@ -8,7 +8,29 @@ public class Aufgabe4 {
 
     private static int[][] generateFilled2DArray(int n) {
         // TODO: Implementieren Sie hier Ihre Lösung für die Methode
-        return null; //Zeile kann geändert oder entfernt werden.
+        int[][] array = new int[n][n];
+        int mid = (n - 1) / 2;
+
+        // Generate pattern of larger integers the more one moves from the diagonal and diagonal
+        for (int i = 0; i < n; i++) {
+            int startRow = i, startCol = i;
+            for (int j = 0; j < n - i; j++) {
+                array[startRow + j][startCol] = j + 1;
+                array[startRow][startCol + j] = j + 1;
+            }
+        }
+
+        // TODO: Incorporate -1 code into above loop
+        // Generate -1 box around the middle
+        for (int col = 0; col < n; col++) {
+            for (int row = 0; row < n; row++) {
+                if ((col >= mid - 1 && col <= mid + 1) && (row >= mid - 1 && row <= mid + 1) && !(col == mid && row == mid)) {
+                    array[row][col] = -1;
+                }
+            }
+        }
+
+        return array; //Zeile kann geändert oder entfernt werden.
     }
 
     //Vorgegebene Methode - BITTE NICHT VERÄNDERN!
