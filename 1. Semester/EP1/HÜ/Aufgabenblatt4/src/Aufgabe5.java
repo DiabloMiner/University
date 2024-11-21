@@ -7,8 +7,19 @@ import java.util.Arrays;
 public class Aufgabe5 {
 
     private static int[][] generateExtendedArray(int[] inputArray) {
-        // TODO: Implementieren Sie hier Ihre Lösung für die Methode
-        return null; //Zeile kann geändert oder entfernt werden.
+        // Read out parameters
+        int startLine = inputArray[0], endLine = inputArray[1], startVal = inputArray[2];
+        int[][] extendedArray = new int[endLine - startLine + 1][];
+
+        for (int lineLength = startLine; lineLength <= endLine; lineLength++) {
+            // Create new appropriately sized array
+            extendedArray[lineLength - startLine] = new int[lineLength];
+            for (int i = 0; i < lineLength; i++) {
+                // Go through the new array and increment startVal
+                extendedArray[lineLength - startLine][i] = startVal++;
+            }
+        }
+        return extendedArray;
     }
 
     //Vorgegebene Methode - BITTE NICHT VERÄNDERN!

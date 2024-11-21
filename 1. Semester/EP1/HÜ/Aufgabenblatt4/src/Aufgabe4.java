@@ -7,7 +7,6 @@ import java.util.Arrays;
 public class Aufgabe4 {
 
     private static int[][] generateFilled2DArray(int n) {
-        // TODO: Implementieren Sie hier Ihre Lösung für die Methode
         int[][] array = new int[n][n];
         int mid = (n - 1) / 2;
 
@@ -20,7 +19,6 @@ public class Aufgabe4 {
             }
         }
 
-        // TODO: Incorporate -1 code into above loop
         // Generate -1 box around the middle
         for (int col = 0; col < n; col++) {
             for (int row = 0; row < n; row++) {
@@ -30,7 +28,7 @@ public class Aufgabe4 {
             }
         }
 
-        return array; //Zeile kann geändert oder entfernt werden.
+        return array;
     }
 
     //Vorgegebene Methode - BITTE NICHT VERÄNDERN!
