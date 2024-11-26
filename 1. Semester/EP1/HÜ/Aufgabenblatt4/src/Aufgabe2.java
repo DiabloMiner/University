@@ -50,20 +50,25 @@ public class Aufgabe2 {
 
         char[] charArray = new char[] {'a', '8', '8', 'G', '2', ':', ':', ':', 'F', '7', 'b', 'b', '-', 'T'};
         int insertions = 0, insertionsSoFar = 0;
+        // Determine total number of insertions needed
         for (int i = 0; i < charArray.length - 1; i++) {
             insertions += (charArray[i] == charArray[i + 1]) ? 1 : 0;
         }
+
+        // Create new array and add chars into it
         char[] modifiedCharArray = new char[charArray.length + insertions];
         for (int i = 0; i < modifiedCharArray.length; i++) {
-            modifiedCharArray[i] = charArray[i - insertionsSoFar];
+            int orignalI = i - insertionsSoFar;
+            modifiedCharArray[i] = charArray[orignalI];
 
-            if (i - insertionsSoFar != charArray.length - 1 && charArray[i - insertionsSoFar] == charArray[i -insertionsSoFar + 1]) {
+            if (orignalI != charArray.length - 1 && charArray[orignalI] == charArray[orignalI + 1]) {
                 modifiedCharArray[i + 1] = '+';
                 insertionsSoFar++;
                 i = i + 1;
             }
         }
         printArray(modifiedCharArray);
+
 
         int[] intArray = new int[20];
         for (int i = 19; i >= 0; i--) {

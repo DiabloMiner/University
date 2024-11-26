@@ -15,12 +15,13 @@ public class Aufgabe6 {
                 length += inputArray[i][j];
             }
 
-            // Fill the reformatted array by reading out input array, keep track of the index in reformattedArray via lengthSoFar
-            int lengthSoFar = 1;
+            // Fill the reformatted array by reading out input array,
+            // keep track of the current index in reformattedArray via lengthSoFar
+            int lengthSoFar = 0;
             reformattedArray[i] = new int[length];
             for (int j = 0; j < inputArray[i].length; j += 2) {
                 int num = inputArray[i][j], val = inputArray[i][j + 1];
-                for (int k = lengthSoFar - 1; k < num + lengthSoFar - 1; k++) {
+                for (int k = lengthSoFar; k < num + lengthSoFar; k++) {
                     reformattedArray[i][k] = val;
                 }
                 lengthSoFar += num;

@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /*
     Aufgabe 1) Code Analyse - Eindimensionale Arrays
 */
@@ -68,7 +66,7 @@ public class Aufgabe1 {
 
     //Antwort zu Punkt c:
         // Die "Kopie" ist eigentlich keine Kopie, sondern eine Referenz zum selben Objekt, das in der Methode modifiziert wird,
-        // wodurch das normale printArray dann natürlich auch das contentFilteredArray herausgibt.
+        // wodurch das normale printArray außerhalb der Mehtode dann natürlich auch das contentFilteredArray herausgibt.
 
     //Antwort zu Punkt d:
         // Parameter in Java sind pass-by-Value, das heißt, dass der Wert des Parameters (in diesem Fall die Referenz auf das Array) kopiert wird,
@@ -84,10 +82,10 @@ public class Aufgabe1 {
         // Es kann aber ein neues Array erstellt werden.
 
     // 3:
-        // Man kann Arrays mit Arrays.copyOf() kopieren oder mit einem for-Loop und einem neuen int-Array.
+        // Man kann Arrays mit Arrays.copyOf() oder ähnlichen Methoden kopieren oder mit einem for-Loop und einem neuen int-Array.
 
     // 4:
         // Meist ist der Vergleich mit '==' nicht sinnvoll, da bei diesem Vergleich die Referenzen der beiden Objekte verglichen werden,
-        // das heißt es wird geprüft ob zwei Arrays das gleiche Objekt sind.
+        // das heißt es wird geprüft, ob zwei Arrays das gleiche Objekt sind, aber nicht ob sie denselben Inhalt haben.
 
 }
