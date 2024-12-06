@@ -10,7 +10,7 @@ public class Aufgabe4 {
         int[][] filledArray = new int[n][n];
         int mid = (n - 1) / 2;
 
-        // Generate pattern of larger integers the more one moves from the diagonal and diagonal
+        // Generate pattern of larger integers the more one moves from the diagonal horizontally and vertically
         for (int i = 0; i < n; i++) {
             int startRow = i, startCol = i;
             for (int j = 0; j < n - i; j++) {
