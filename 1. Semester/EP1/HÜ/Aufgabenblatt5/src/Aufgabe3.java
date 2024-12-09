@@ -12,6 +12,7 @@ public class Aufgabe3 {
 
         for (int i = 0; i < probArray.length; i++) {
             for (int j = 0; j < probArray[i].length; j++) {
+                // Check if this position has an animal
                 if (myRand.nextFloat() <= probability) {
                     probArray[i][j] = true;
                 }
@@ -27,11 +28,12 @@ public class Aufgabe3 {
         int[][] densityArray = new int[animalCompound.length][animalCompound.length];
 
         // Iterate over every entry
-        // and then build the surrounding field
+        // and then calculate the density
         for (int i = 0; i < animalCompound.length; i++) {
             for (int j = 0; j < animalCompound.length; j++) {
                 int density = 0;
 
+                // Compute density
                 for (int k = -1; k <= 1; k++) {
                     for (int l = -1; l <= 1; l++) {
                         int x = i + k, y = j + l;

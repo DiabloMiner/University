@@ -18,7 +18,6 @@ public class Aufgabe4 {
         }
 
         // Recursive case:
-        myDrawObj.setLineWidth(1);
         myDrawObj.drawPoint(sx, sy);
         picArray[sy][sx] = 1;
 
@@ -133,6 +132,7 @@ public class Aufgabe4 {
                         //**********************************************
                         //TODO: Ergänzen Sie den fehlenden Code (Zustand: Fläche füllen)
                         //**********************************************
+                        myDrawObj.setLineWidth(1);
                         floodFill(myDrawObj, picArray, mouseY, mouseX);
                         myDrawObj.show();
                         colorChosen = false;

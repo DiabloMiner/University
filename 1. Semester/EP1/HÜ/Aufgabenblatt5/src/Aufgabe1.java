@@ -20,7 +20,7 @@ public class Aufgabe1 {
         }
 
 
-        // Differentiate between all lines having the same length (min = workArray[0].length)
+        // Differentiate between all lines having the same length (min == workArray[0].length)
         // and there being a shortest line
         if (min != workArray[0].length) {
             for (int i = 0; i < workArray.length; i++) {

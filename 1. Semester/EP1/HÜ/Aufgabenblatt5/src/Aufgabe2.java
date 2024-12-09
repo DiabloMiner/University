@@ -14,6 +14,7 @@ public class Aufgabe2 {
             int sum = 0, index = 0;
             reformattedArray[i] = new int[workArray[i].length + 1];
 
+            // Get all even values
             for (int j = 0; j < workArray[i].length; j++) {
                 if (workArray[i][j] % 2 == 0) {
                     reformattedArray[i][index++] = workArray[i][j];
@@ -21,6 +22,7 @@ public class Aufgabe2 {
                 }
             }
 
+            // Get all odd values
             for (int j = 0; j < workArray[i].length; j++) {
                 if (workArray[i][j] % 2 == 1) {
                     reformattedArray[i][index++] = workArray[i][j];
@@ -28,6 +30,7 @@ public class Aufgabe2 {
                 }
             }
 
+            // Put the sum into reformattedArray
             reformattedArray[i][workArray[i].length] = sum;
         }
 
