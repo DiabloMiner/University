@@ -4,10 +4,25 @@
 
 import codedraw.*;
 
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 public class Aufgabe1 {
 
     public static int size, maxDepth;
     public static CodeDraw myDrawObj;
+
+    public enum ConfigType {
+        INTEGER,
+        BOOLEAN,
+        NONE;
+    }
+
+    public enum GameEnd {
+        PLAYER1WIN,
+        PLAYER2WIN,
+        STALEMATE;
+    }
 
     public static void main(String[] args) {
         size = 600;
@@ -21,16 +36,20 @@ public class Aufgabe1 {
                 {' ', ' ', ' '}
         };
 
-        boolean twoPlayer = false; //true ... human vs. human, false ... human vs. computer
+        String[] endTexts = new String[] {"Player 1 (Human) playing as X has won!\nPlayer 2 (%s) playing as O has lost!", "Player 2 (%s) playing as O has won!\nPlayer 1 (Human) playing as X has lost!", "Stalemate!\nNo one has won or lost."};
+        String[] configData = startWindow(new String[] {"Do you want to play against a computer? (Enter a boolean) \nOtherwise you play against a second human player.\nPlease enter your answer in the console.", "Should the visualization of the prediction of the minimax algorithm be shown? (Enter a boolean)\nPlease enter your answer in the console.", "What should the depth of the minimax algorithm be? (Enter a integer)\nPlease enter your answer in the console.", "Player 1 (Human) will be X and Player 2 (%s) will be O.%s\nPlease enter something in the console to proceed."}, new ConfigType[]{ConfigType.BOOLEAN, ConfigType.BOOLEAN, ConfigType.INTEGER, ConfigType.NONE});
+
+        boolean twoPlayer = !Boolean.parseBoolean(configData[0]); //true ... human vs. human, false ... human vs. computer
         boolean player = true; //(1Player) human = true, computer = false, (2Player) human1 = true, human2 = false
-        maxDepth = 3;
+        maxDepth = Integer.parseInt(configData[2]);
         boolean gameRunning = true;
-        boolean showMinimax = false;
+        boolean showMinimax = Boolean.parseBoolean(configData[1]);
+        boolean showingMinimax = false;
 
         drawGameBoard(myDrawObj, gameBoard);
 
         while (!myDrawObj.isClosed() && gameRunning) {
-            if (myEventSC.hasMouseClickEvent()) {
+            if (myEventSC.hasMouseClickEvent() && !showingMinimax) {
                 // Convert click coordinates into indices
                 MouseClickEvent mouseClickEvent = myEventSC.nextMouseClickEvent();
                 int widthThird = myDrawObj.getWidth() / 3, heightThird = myDrawObj.getHeight() / 3;
@@ -46,7 +65,10 @@ public class Aufgabe1 {
                 int[] retArray;
                 if (showMinimax) {
                     retArray = minimax(gameBoard, false, maxDepth, 0, size, 0, size);
+                    showingMinimax = true;
                     myDrawObj.show();
+
+                    System.out.println("To abort showing the minimax visualization please press a key or click in the window.");
                 } else {
                     retArray = minimax(gameBoard, false, maxDepth);
                 }
@@ -56,56 +78,97 @@ public class Aufgabe1 {
 
                 // Change player
                 player = !player;
+            } else if (showingMinimax && (myEventSC.hasKeyPressEvent() || myEventSC.hasMouseClickEvent())) {
+                showingMinimax = false;
+                myEventSC.nextEvent();
             } else {
                 myEventSC.nextEvent();
             }
 
-            // TODO: Improve with win / checkmate message
-            if (checkIfFull(gameBoard)) {
-                System.out.println("Stalemate");
-                gameRunning = false;
-            } else if (checkIfWinner(gameBoard, player) || checkIfWinner(gameBoard, !player)) {
-                System.out.println("Player " + (!player ? "X" : "O") + " has won.");
-                gameRunning = false;
+            // Draw gameboard
+            if (!showingMinimax) {
+                myDrawObj.clear();
+                drawGameBoard(myDrawObj, gameBoard);
+                myDrawObj.show();
             }
 
-            myDrawObj.clear();
-            drawGameBoard(myDrawObj, gameBoard);
-            myDrawObj.show();
+            // Check win/stalemate conditions
+            if (!showingMinimax && checkIfFull(gameBoard)) {
+                System.out.println("Stalemate");
+                gameRunning = false;
+                endWindow(GameEnd.STALEMATE, twoPlayer, endTexts);
+            } else if (!showingMinimax && (checkIfWinner(gameBoard, player) || checkIfWinner(gameBoard, !player))) {
+                System.out.println("Player " + (!player ? "X" : "O") + " has won.");
+                gameRunning = false;
+                endWindow(!player ? GameEnd.PLAYER1WIN : GameEnd.PLAYER2WIN, twoPlayer, endTexts);
+            }
         }
     }
 
-    private static int[] minimax(char[][] gameBoard, boolean player, int depth) {
-        int[] retArray = new int[3];
-        retArray[2] = player ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-        for (int i = 0; i < gameBoard.length; i++) {
-            for (int j = 0; j < gameBoard[i].length; j++) {
-                if (Character.isWhitespace(gameBoard[i][j])) {
-                    gameBoard[i][j] = player ? 'X' : 'O';
+    private static String[] startWindow(String[] prompts, ConfigType[] types) {
+        CodeDraw cd = new CodeDraw(800, 100);
+        cd.setTitle("Configuration");
+        cd.setWindowPositionX(myDrawObj.getWindowPositionX() + myDrawObj.getWidth() / 2 - cd.getWidth() / 2);
+        cd.setWindowPositionY(myDrawObj.getWindowPositionY() + myDrawObj.getHeight() / 2 - cd.getHeight() / 2);
+        cd.setTextFormat(new TextFormat().setTextOrigin(TextOrigin.CENTER));
+        cd.show();
 
-                    if (checkIfWinner(gameBoard, true)) {
-                        retArray = new int[] {i, j, -1};
-                    } else if (checkIfWinner(gameBoard, false)) {
-                        retArray = new int[] {i, j, 1};
-                    } else if (depth - 1 == 0 || checkIfFull(gameBoard)) {
-                        retArray = new int[] {i, j, 0};
-                    } else {
-                        int[] tempArray = minimax(gameBoard, !player, depth - 1);
-                        if (player) {
-                            if (tempArray[2] < retArray[2]) {
-                                retArray = new int[] {i, j, tempArray[2]};
-                            }
-                        } else {
-                            if (tempArray[2] > retArray[2]) {
-                                retArray = new int[] {i, j, tempArray[2]};
-                            }
-                        }
-                    }
-                    gameBoard[i][j] = ' ';
+        Scanner scanner = new Scanner(System.in);
+        String[] answers = new String[prompts.length];
+        int i = 0;
+
+        while (!cd.isClosed()) {
+            System.out.println(String.format(prompts[i], Boolean.parseBoolean(answers[0]) ? "Computer" : "Human", Boolean.parseBoolean(answers[1]) ? "\nTo abort showing the minimax visualization please press a key or click in the window." : ""));
+            cd.clear();
+            cd.drawText(cd.getWidth() / 2.0, cd.getHeight() / 2.0, prompts[i]);
+            cd.show();
+
+            if (scanner.hasNext()) {
+                if (types[i] == ConfigType.BOOLEAN) {
+                    answers[i++] = String.valueOf(scanner.nextBoolean());
+                } else if (types[i] == ConfigType.INTEGER) {
+                    answers[i++] = String.valueOf(scanner.nextInt());
+                } else if (types[i] == ConfigType.NONE) {
+                    answers[i++] = "";
+                }
+                System.out.println();
+
+                if (i == prompts.length) {
+                    cd.close();
                 }
             }
         }
-        return retArray;
+
+        return answers;
+    }
+
+    private static void endWindow(GameEnd end, boolean twoPlayers, String[] endTexts) {
+        String endText = (end == GameEnd.PLAYER1WIN) ? endTexts[0] : ((end == GameEnd.PLAYER2WIN) ?  endTexts[1] : endTexts[2]);
+
+        CodeDraw cd = new CodeDraw(800, 200);
+        cd.setTitle("Game end");
+        cd.setWindowPositionX(myDrawObj.getWindowPositionX() + myDrawObj.getWidth() / 2 - cd.getWidth() / 2);
+        cd.setWindowPositionY(myDrawObj.getWindowPositionY() + myDrawObj.getHeight() / 2 - cd.getHeight() / 2);
+        cd.setTextFormat(new TextFormat().setTextOrigin(TextOrigin.CENTER).setBold(true).setFontSize(30));
+        cd.drawText(cd.getWidth() / 2.0, cd.getHeight() / 2.0, String.format(endText, twoPlayers ? "Human" : "Computer") + "\nPress a key to end the application.");
+        cd.show();
+
+        EventScanner es = cd.getEventScanner();
+
+        while (!cd.isClosed()) {
+            if (es.hasKeyPressEvent()) {
+                System.out.println("Game is now ending.");
+                cd.close();
+            } else {
+                es.nextEvent();
+            }
+        }
+
+        myDrawObj.close();
+    }
+
+    private static int[] minimax(char[][] gameBoard, boolean player, int depth) {
+        return minimax(gameBoard, player, depth, 0, size, 0, size);
     }
 
     private static int[] minimax(char[][] gameBoard, boolean player, int depth, double lastMinX, double lastMaxX, double lastMinY, double lastMaxY) {
@@ -204,32 +267,7 @@ public class Aufgabe1 {
     }
 
     private static void drawGameBoard(CodeDraw myDrawObj, char[][] gameBoard) {
-        // Draw four lines
-        int width = size, height = size, widthThird = width / 3, heightThird = width / 3;
-
-        myDrawObj.drawLine(0, heightThird, width, heightThird);
-        myDrawObj.drawLine(0, 2 * heightThird, width, 2 * heightThird);
-        myDrawObj.drawLine(widthThird, 0, widthThird, height);
-        myDrawObj.drawLine(2 * widthThird, 0, 2 * widthThird, height);
-
-        // Draw entries of gameBoard
-        for (int i = 0; i < gameBoard.length; i++) {
-            for (int j = 0; j < gameBoard[i].length; j++) {
-                int minX = j * widthThird, maxX = (j + 1) * widthThird, minY = i * heightThird, maxY = (i + 1) * heightThird;
-
-                // Draw X
-                if (gameBoard[i][j] == 'X') {
-                    myDrawObj.drawLine(minX, minY, maxX, maxY);
-                    myDrawObj.drawLine(minX, maxY, maxX, minY);
-                }
-
-                // Draw circle
-                if (gameBoard[i][j] == 'O') {
-                    myDrawObj.drawCircle((double) (minX + maxX) / 2, (double) (minY + maxY) / 2, (double) widthThird / 2);
-                }
-
-            }
-        }
+        drawGameBoard(myDrawObj, gameBoard, 0, size, 0, size);
     }
 
     private static void drawGameBoard(CodeDraw myDrawObj, char[][] gameBoard, double minX, double maxX, double minY, double maxY) {
