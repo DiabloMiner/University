@@ -5,7 +5,6 @@
 import codedraw.*;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Aufgabe1 {
 
@@ -41,7 +40,7 @@ public class Aufgabe1 {
 
         boolean twoPlayer = !Boolean.parseBoolean(configData[0]); //true ... human vs. human, false ... human vs. computer
         boolean player = true; //(1Player) human = true, computer = false, (2Player) human1 = true, human2 = false
-        maxDepth = Integer.parseInt(configData[2]);
+        maxDepth = Math.max(Integer.parseInt(configData[2]), 0);
         boolean gameRunning = true;
         boolean showMinimax = Boolean.parseBoolean(configData[1]);
         boolean showingMinimax = false;
@@ -108,6 +107,7 @@ public class Aufgabe1 {
     private static String[] startWindow(String[] prompts, ConfigType[] types) {
         CodeDraw cd = new CodeDraw(800, 100);
         cd.setTitle("Configuration");
+        cd.setAlwaysOnTop(true);
         cd.setWindowPositionX(myDrawObj.getWindowPositionX() + myDrawObj.getWidth() / 2 - cd.getWidth() / 2);
         cd.setWindowPositionY(myDrawObj.getWindowPositionY() + myDrawObj.getHeight() / 2 - cd.getHeight() / 2);
         cd.setTextFormat(new TextFormat().setTextOrigin(TextOrigin.CENTER));
@@ -120,7 +120,7 @@ public class Aufgabe1 {
         while (!cd.isClosed()) {
             System.out.println(String.format(prompts[i], Boolean.parseBoolean(answers[0]) ? "Computer" : "Human", Boolean.parseBoolean(answers[1]) ? "\nTo abort showing the minimax visualization please press a key or click in the window." : ""));
             cd.clear();
-            cd.drawText(cd.getWidth() / 2.0, cd.getHeight() / 2.0, prompts[i]);
+            cd.drawText(cd.getWidth() / 2.0, cd.getHeight() / 2.0, String.format(prompts[i], Boolean.parseBoolean(answers[0]) ? "Computer" : "Human", Boolean.parseBoolean(answers[1]) ? "\nTo abort showing the minimax visualization please press a key or click in the window." : ""));
             cd.show();
 
             if (scanner.hasNext()) {
