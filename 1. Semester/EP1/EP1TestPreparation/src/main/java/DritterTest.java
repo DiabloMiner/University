@@ -125,6 +125,160 @@ public class DritterTest {
         System.out.print("\n\n\n");
 
 
+        test1 = new int[][]  {{5}, {5, 7, 9}, {8, 5}, {}};
+        test2 = new int[][]  {{1, 2}, {1, 2, 3}, {1, 2, 3, 4}};
+        test3 = new int[][]  {{}, {1, 2, 3, 4}, {1}};
+        seq = new int[] {1, 2,-5, 3,-1, 6,-3, 3};
+
+        result1 = getRectangular(test1);
+        System.out.println(Arrays.deepToString(result1));
+        result2 = getRectangular(test2);
+        System.out.println(Arrays.deepToString(result2));
+        int[][] result3 = getRectangular(test3);
+        System.out.println(Arrays.deepToString(result3));
+        int[][] result4 = getRectangular(new int[][]{{}});
+        System.out.println(Arrays.deepToString(result4));
+
+        removeEntry(test2, 2);
+        System.out.println(Arrays.deepToString(test2));
+        removeEntry(test3, 0);
+        System.out.println(Arrays.deepToString(test3));
+
+        System.out.println(isAlternating(seq, 0));
+        System.out.println(isAlternating(seq, 1));
+        System.out.println(isAlternating(seq, 6));
+        System.out.println(isAlternating(seq, 7));
+
+
+        System.out.print("\n\n\n");
+
+
+        test1 = new int[][]  {{5, 7, 5, 7}, {5}, {0, 1, 1, 0}};
+        test2 = new int[][]  {{5, 7, 9}, {5}, {8, 5}, {2}, {3}};
+        test3 = new int[][]  {{1, 2}, {1, 2, 3}, {}};
+        seq1 = "1(234)67";
+
+        result1 = addTriangle(test1);
+        System.out.println(Arrays.deepToString(result1));
+        result2 = addTriangle(test2);
+        System.out.println(Arrays.deepToString(result2));
+
+        reverseBetween(test1, 2, 1);
+        System.out.println(Arrays.deepToString(test1));
+        reverseBetween(test2,  1, 4);
+        System.out.println(Arrays.deepToString(test2));
+        reverseBetween(test3,  2, 2);
+        System.out.println(Arrays.deepToString(test3));
+        reverseBetween(test3,  0, 2);
+        System.out.println(Arrays.deepToString(test3));
+    }
+
+    public static void reverseBetween(int[][] input, int ind1, int ind2) {
+        int[][] result = new int[input.length][];
+
+        int minIndex = Math.min(ind1, ind2), maxIndex = Math.max(ind1, ind2);
+
+        for (int i = 0; i < minIndex; i++) {
+            result[i] = input[i];
+        }
+
+        int resultI = minIndex;
+        for (int i = maxIndex; i >= minIndex; i--) {
+            result[resultI++] = input[i];
+        }
+
+        for (int i = maxIndex + 1; i < result.length; i++) {
+            result[i] = input[i];
+        }
+
+
+        for (int i = 0; i < input.length; i++) {
+            input[i] = result[i];
+        }
+    }
+
+    public static int[][] addTriangle(int[][] input) {
+        int[][] result = new int[input.length + input[0].length][];
+
+        for (int i = 0; i < input[0].length; i++) {
+            result[i] = new int[i + 1];
+            for (int j = 0; j < result[i].length; j++) {
+                result[i][j] = i + 1;
+            }
+        }
+
+        for (int i = 0; i < input.length; i++) {
+            int resultIndex = i + input[0].length;
+            result[resultIndex] = new int[input[i].length];
+            for (int j = 0; j < input[i].length; j++) {
+                result[resultIndex][j] = input[i][j];
+            }
+        }
+
+        return result;
+    }
+
+    public static boolean isAlternating(int[] seq, int index) {
+        // Base case
+        if (index == seq.length - 1) {
+            return true;
+        }
+
+        // Recursive case
+        return (Math.signum(seq[index]) != Math.signum(seq[index + 1])) && isAlternating(seq, index + 1);
+    }
+
+    public static void removeEntry(int[][] input, int col) {
+        int[][] workingArray = new int[input.length][];
+
+        for (int i = 0; i < input.length; i++) {
+            int length = (input[i].length - 1 >= col) ? input[i].length - 1 : input[i].length;
+            workingArray[i] = new int[length];
+
+            boolean colRemoved = false;
+            for (int j = 0; j < input[i].length; j++) {
+                if (j != col) {
+                    workingArray[i][colRemoved ? j - 1 : j] = input[i][j];
+                } else {
+                    colRemoved = true;
+                }
+            }
+        }
+
+        for (int i = 0; i < input.length; i++) {
+            input[i] = workingArray[i];
+        }
+    }
+
+    public static int[][] getRectangular(int[][] input) {
+        int[][] result = new int[input.length][];
+
+        int maxLength = 0;
+        for (int[] ints : input) {
+            if (ints.length > maxLength) {
+                maxLength = ints.length;
+            }
+        }
+
+
+        for (int i = 0; i < input.length; i++) {
+            result[i] = new int[maxLength];
+
+            if (input[i].length == 0) {
+                for (int j = 0; j < result[i].length; j++) {
+                    result[i][j] = 0;
+                }
+            } else {
+                int j = 0;
+                while (j < maxLength) {
+                    result[i][j] = input[i][j % input[i].length];
+                    j++;
+                }
+            }
+        }
+
+
+        return result;
     }
 
     public static String replicateCharacters(String sequence, String repSequence) {
