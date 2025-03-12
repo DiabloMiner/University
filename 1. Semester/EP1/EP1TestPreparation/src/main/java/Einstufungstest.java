@@ -1,7 +1,12 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.spi.AbstractResourceBundleProvider;
 
 public class Einstufungstest {
+
+    public static int count, lowestIndex = 0;
+    public static List<Integer> indices = new ArrayList<>();
 
     public static void main(String[] args) {
         short result;
@@ -67,7 +72,54 @@ public class Einstufungstest {
         printPattern(1,1);
         printPattern(8,5);
 
-        horner(105, 2);
+        System.out.println();
+        countWords();
+    }
+
+    public static int countPossibilities(char[] alphabet, String string, int maxLength) {
+        int count = 0;
+        for (char c : alphabet) {
+            String tempString = string + c;
+
+            if (!(tempString.contains("goto") || tempString.contains("then") || tempString.contains("and") || tempString.contains("or") || tempString.contains("if"))) {
+                count++;
+                // System.out.println(tempString);
+
+                if (tempString.length() < maxLength) {
+                    count += countPossibilities(alphabet, tempString, maxLength);
+                }
+            }
+        }
+        return count;
+    }
+
+    public static List<String> genPossibilities(char[] alphabet, String string, int maxLength) {
+        List<String> words = new ArrayList<>();
+        for (char c : alphabet) {
+            String tempString = string + c;
+
+            if ((tempString.contains("if"))) {
+                words.add(tempString);
+
+            }
+            if (tempString.length() < maxLength) {
+                words.addAll(genPossibilities(alphabet, tempString, maxLength));
+            }
+        }
+        return words;
+    }
+
+    public static void countWords() {
+        count = 0;
+
+        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+
+        System.out.println(countPossibilities(alphabet, "", 5));
+
+
+        List<String> words = genPossibilities(alphabet, "", 5);
+
+        System.out.println(words.size());
     }
 
     public static void horner(int num, int b) {

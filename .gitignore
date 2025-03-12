@@ -5,7 +5,7 @@ target/
 **/out/
 out/
 
-### IntelliJ IDEA ###
+# IntelliJ IDEA #
 **/.idea/modules.xml
 **/.idea/jarRepositories.xml
 **/.idea/compiler.xml
@@ -16,3 +16,6 @@ out/
 **/.iws
 **/.iml
 **/.ipr
+
+# EP2 #
+./"2. Semester"/EP2/
