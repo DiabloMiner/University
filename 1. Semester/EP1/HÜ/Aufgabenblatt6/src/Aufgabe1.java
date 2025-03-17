@@ -83,6 +83,8 @@ public class Aufgabe1 {
             } else {
                 myEventSC.nextEvent();
             }
+            
+            
 
             // Draw gameboard
             if (!showingMinimax) {
