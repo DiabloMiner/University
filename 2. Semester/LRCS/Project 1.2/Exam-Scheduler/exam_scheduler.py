@@ -12,36 +12,8 @@ def v2n(i, j, k):
 def n2v(i):
     return num2var[i]
 
-def all_events_with_same_course(course, days: list[str], rooms: list[str]) -> list:
-    l = list([])
-    for i in days:
-        for j in rooms:
-            l.append((course, i, j))
-    return l
 
-def get_all_2_subsets(list) -> list[list]:
-    subsets = []
-    for i in range(0, len(list)):
-        for j in range(0, len(list)):
-            subsets.append([list[i], list[j]])
-    return subsets
-
-
-def get_all_2_subsets_2(list1, list2) -> list[list]:
-    subsets = []
-    for i in range(0, len(list1)):
-        for j in range(0, len(list2)):
-            subsets.append([list1[i], list2[j]])
-    return subsets
-
-def get_all_different_2_subsets(list) -> list[list]:
-    subsets = []
-    for i in range(0, len(list)):
-        for j in range(i + 1, len(list)):
-            subsets.append(list[i], list[j])
-    return subsets
-
-def get_all_different_2_subsets(list1, list2) -> list[list]:
+def get_all_2_subsets(list1, list2) -> list[list]:
     subsets = []
     for i in range(0, len(list1)):
         for j in range(0, len(list2)):
@@ -171,7 +143,7 @@ def encode_cnf(days: list[str],
     # Step 2: iterate over all possible days and ensure conflicting courses can't happen on the same day
     for k in range(0, len(days)):
         for i in range(0, len(course_subsets)):
-            for [g, h] in get_all_2_subsets_2(room_dict[course_subsets[i][0]], room_dict[course_subsets[i][1]]):
+            for [g, h] in get_all_2_subsets(room_dict[course_subsets[i][0]], room_dict[course_subsets[i][1]]):
                 event1 = (course_subsets[i][0], days[k], g)
                 event2 = (course_subsets[i][1], days[k], h)
                 # prevent duplicate clauses
