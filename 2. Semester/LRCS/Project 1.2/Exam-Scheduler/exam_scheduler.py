@@ -96,9 +96,13 @@ def encode_cnf(days: list[str],
                 l.append(v2n(i, j, k))
         cnf.append(l)
 
+    print(len(cnf))
+
     # each exam should only happen exactly once
     # i.e. if a exam happens that implies all other variants of that exam do not happen
+    ravg = 0
     for i in courses:
+        ravg += len(room_dict[i])
         for j in enumerate(days):
             for k in enumerate(room_dict[i]):
                 current_event = (i, j[1], k[1])
@@ -107,6 +111,13 @@ def encode_cnf(days: list[str],
                     for h in range(k[0] + 1, len(room_dict[i])):
                         other_event = (i, days[g], room_dict[i][h])
                         cnf.append([-v2n(current_event[0], current_event[1], current_event[2]), -v2n(other_event[0], other_event[1], other_event[2])])
+    # c * d * r[c]
+    # c * r[c] * (d - 1 +  d - 2 + ... + 1)
+    # c * (d - 1 +  d - 2 + ... + 1) * (r[c] - 1 + ... + 1)
+    # c * (d^2 - d) / 2 * (r[c]^2 - r[c]) / 2
+    # currently ravg = 1.85
+    print("avg1: " + str(ravg / len(courses)))
+    print(len(cnf))
 
     # two exams cannot happen on the same day k in the same room g
     for i in enumerate(courses):
@@ -121,6 +132,8 @@ def encode_cnf(days: list[str],
                         current_event = (i[1], k, g)
                         other_event = (courses[j], k, g)
                         cnf.append([-v2n(current_event[0], current_event[1], current_event[2]), -v2n(other_event[0], other_event[1], other_event[2])])
+    
+    print(len(cnf))
 
 
     # If a student has an exam on a day that implies that no other exam that he has should be on that day
@@ -140,15 +153,31 @@ def encode_cnf(days: list[str],
                 if ((not to_be_added in course_subsets) and (not to_be_added_inverse in course_subsets)):
                     course_subsets.append(to_be_added)
 
+    print("course_subsets: " + str(len(course_subsets)))
+
+    mulavg = 0
+    rejavg = 0
     # Step 2: iterate over all possible days and ensure conflicting courses can't happen on the same day
     for k in range(0, len(days)):
         for i in range(0, len(course_subsets)):
+            if k == 0:
+                mulavg += len(room_dict[course_subsets[i][0]]) * len(room_dict[course_subsets[i][1]])
             for [g, h] in get_all_2_subsets(room_dict[course_subsets[i][0]], room_dict[course_subsets[i][1]]):
                 event1 = (course_subsets[i][0], days[k], g)
                 event2 = (course_subsets[i][1], days[k], h)
                 # prevent duplicate clauses
                 if (not g == h):
                     cnf.append([-v2n(event1[0], event1[1], event1[2]), -v2n(event2[0], event2[1], event2[2])])
+                elif (k == 0 and i == 0):
+                    rejavg += 1 / len(get_all_2_subsets(room_dict[course_subsets[i][0]], room_dict[course_subsets[i][1]]))
+    print("avg2: " + str(mulavg / len(course_subsets)))
+    print("avg3: " + str(rejavg))
+
+
+    # d * c_s * (rmax^2 - rmax)
+    # d * c_s * (r[c_s[0]] * r[c_s[1]] - rcut)
+    
+    print(len(cnf))
 
     return cnf
 
