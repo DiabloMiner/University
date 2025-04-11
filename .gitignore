@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 **/out/
 out/
+**/build
 
 # IntelliJ IDEA #
 **/.idea/modules.xml
@@ -22,3 +23,7 @@ out/
 
 # Ignore EVC Environment
 **/.evc_env/
+
+# Ignore gradle
+**/.gradle
+**/gradle
