@@ -52,77 +52,19 @@ public class StudentSolutionForExerciseImplementation implements StudentSolution
         }
     }
 
-    private int binomial(int n, int k) {
-        if (k > n - k)
-            k = n - k;
-
-        int b = 1;
-        for (int i = 1, m = n; i <= k; i++, m--)
-            b = b * m / i;
-        return b;
-    }
-
-    private int[] expandArray(int[] array, int number) {
-        int[] newArray = new int[array.length + 1];
-        System.arraycopy(array, 0, newArray, 0, array.length);
-        newArray[array.length] = number;
-        return newArray;
-    }
-
-    private boolean subsetSum(int[] numbers, int[][] subsets, int n, int i, int sum) {
-        // If no match has been found at this point the algorithm can end
-        if (n == i) return subsets[0][0] == sum;
-
-        // Test if subsets introduced to function contain the sum
-        for (int[] subset : subsets) {
-            int subsetSum = 0;
-            for (int k = 0; k < subset.length; k++) {
-                subsetSum += numbers[subset[k]];
-            }
-            if (subsetSum == sum) return true;
-        }
-
-        // Construct a new level of subsets
-        int[][] newSubsets = new int[binomial(n, ++i)][];
-        int g = 0;
-        for (int[] subset : subsets) {
-            int lastIndex = subset[subset.length - 1];
-            for (int k = lastIndex + 1; k < n; k++) {
-                newSubsets[g++] = expandArray(subset, k);
-            }
-        }
-        return subsetSum(numbers, newSubsets, n, i, sum);
-    }
-
-    private boolean recursiveSubsetSum(int[] numbers, int sum) {
+    // Implementieren Sie hier Ihre Lösung für die Teilsummen
+    public boolean hasSubsetSum(int sum, int[] numbers) {
         // Search over all subsets of current numbers if they are like sum (only if numbers.length == 1)
         if (numbers.length == 1) {
             return numbers[0] == sum;
         } else {
             // Remove first element from numbers and call recursive subset sum again
-            // 1 2 3 4
-            // 2 3 4 ->
             int[] newNumbers = new int[numbers.length - 1];
             for (int i = 0; i < newNumbers.length; i++) {
                 newNumbers[i] = numbers[i + 1];
             }
 
-            return numbers[0] == sum || recursiveSubsetSum(newNumbers, sum) || recursiveSubsetSum(newNumbers, sum - numbers[0]);
+            return numbers[0] == sum || hasSubsetSum(sum, newNumbers) || hasSubsetSum(sum - numbers[0], newNumbers);
         }
-    }
-
-    // Implementieren Sie hier Ihre Lösung für die Teilsummen
-    public boolean hasSubsetSum(int sum, int[] numbers) {
-        return recursiveSubsetSum(numbers, sum);
-        /*
-        // Create initial subsets
-        int[][] subsets = new int[numbers.length][];
-        for (int i = 0; i < numbers.length; i++) {
-            subsets[i] = new int[] {i};
-        }
-
-        // Call recursive functions
-        return subsetSum(numbers, subsets, numbers.length, 1, sum);*/
-
     }
 }
